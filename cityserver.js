@@ -1,7 +1,9 @@
 var fs = require('fs');
 var http = require('http');
 var url = require('url');
-var ROOT_DIR = "html/";
+var ROOT_DIR = "prod/vdbMovies";
+
+
 http.createServer(function (req, res) {
   var urlObj = url.parse(req.url, true, false);
   if (urlObj.pathname.indexOf("getcity") !== -1){
@@ -9,18 +11,20 @@ http.createServer(function (req, res) {
       if(err){
 
       } else {
-        var cities = data.toString().split('\n');
-        var myRe = new RegExp("^"+urlObj.query["q"]);
-        var resultArray = [];
-        for (i = 0; i < cities.length; i++){
-          var result = cities[i].search(myRe);
-          if(result != -1) {
-            var obj = {"city": cities[i]}
-            resultArray.push(obj);
+        if (urlObj["q"] !=== ""){
+          var cities = data.toString().split('\n');
+          var myRe = new RegExp("^"+urlObj.query["q"]);
+          var resultArray = [];
+          for (i = 0; i < cities.length; i++){
+            var result = cities[i].search(myRe);
+            if(result != -1) {
+              var obj = {"city": cities[i]}
+              resultArray.push(obj);
+            }
           }
+          res.writeHead(200);
+          res.end(JSON.stringify(resultArray));
         }
-        res.writeHead(200);
-        res.end(JSON.stringify(resultArray));
       }
     });
   } else {
