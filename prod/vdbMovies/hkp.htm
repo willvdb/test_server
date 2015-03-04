@@ -1,0 +1,77 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<link rel="stylesheet" href="colorbox.css" />
+	<script src="jquery.js"></script>
+	<script src="vscript.js"></script>
+	<script src="jquery.colorbox.js"></script>
+	<script>
+		$(document).ready
+		(function(){
+			$(".vid").colorbox({inline:'true'});
+		});
+	</script>
+</head>
+<body>
+<div id="inner_body">
+	<div id="head_div">
+		<a href="vdm.htm">
+			<img id="logo" src = "pictures/logo_2-1_small.png"
+			 onmouseover="glow()" onmouseout="unglow()" align="left">
+			</img>
+		</a>
+		<h1 id="header">VDB Movies</h1>
+	</div>
+	<nav>
+		<ul>
+			<li><a href="vdm.htm">Home</a></li>
+			<li><a href="#">Films</a>
+				<ul>
+					<li><a href="#">Best of series</a></li>
+					<li><a href="#">The Killer</a></li>
+					<li><a href="hkp.htm">Harold Kublar</a>
+						<ul>
+							<li><a href="#">The Origin</a></li>
+							<li><a href="#">The Divine Battalion</a></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li><a href="#">Contact us</a>
+				<ul>
+					<li><a href="#">Business</a></li>
+					<li><a href="#">Fan Mail</a></li>
+				</ul>
+			</li>
+			<li><a href="#">Inspiration</a></li>
+		</ul>
+	</nav>
+	<h2 id="hk_title">Harold Kublar</h2>
+	<table id="choices">
+	<tr>
+		<td><img class="tpic" src="C:\Users\Will\Documents\HK3\Old\edited\hk1w.jpg"><br>
+		<a class="vid" href="#hk1">Origins</a></td>
+		<td><img class="tpic" src="C:\Users\Will\Documents\HK3\Old\edited\hk2w.jpg"><br>
+		<a class="vid" href="#hk2c">The Divine Battalion</a></td>
+		<td><img class="tpic" src="C:\Users\Will\Documents\HK3\pictures\p4w.jpg"><br>
+		<a class="il" href="#">III</a></td>
+	</tr>
+	</table>
+	</div>
+	
+		<div style='display:none'>
+			<div id="hk2c" style='padding:10px; background:#fff;'>
+				<video controls>
+					<source src="videos/hkc2.webm" type="video/webm">
+					Your browser does not support the video tag.
+				</video>
+			</div>
+			<div id="hk1" style='padding:10px; background:#fff;'>
+				<video controls>
+					<source src="videos/Harold_Kublar.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+			</div>
+		</div>
+</body>
+</html>.
