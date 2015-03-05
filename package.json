@@ -1,0 +1,28 @@
+{
+  "name": "willvdb_test_server",
+  "version": "0.0.0",
+  "description": "a server written for cs360, params= port # and root dir",
+  "main": "cityserver.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/willvdb/test_server.git"
+  },
+  "keywords": [
+    "\"willvdb\"",
+    "\"simple_server\""
+  ],
+  "author": "Will VanDenBerghe <willvdb9141@gmail.com>",
+  "license": "\"MIT\"",
+  "bugs": {
+    "url": "https://github.com/willvdb/test_server/issues"
+  },
+  "homepage": "https://github.com/willvdb/test_server",
+  "dependencies": {
+    "fs": "0.0.2",
+    "http": "0.0.0",
+    "url": "^0.10.3"
+  }
+}
