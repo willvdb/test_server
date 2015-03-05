@@ -44,6 +44,16 @@ http.createServer(function (req, res) {
       res.writeHead(200);
       res.end(data);
     });
+  } else if(urlObj.pathname === "/weather"){
+    fs.readFile("prod/vdbMovies/city-weather.html", function (err,data) {
+      if (err) {
+        res.writeHead(404);
+        res.end(JSON.stringify(err));
+        return;
+      }
+      res.writeHead(200);
+      res.end(data);
+    });
   } else {
     fs.readFile(ROOT_DIR + urlObj.pathname, function (err,data) {
       if (err) {
