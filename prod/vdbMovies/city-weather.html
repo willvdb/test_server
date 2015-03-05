@@ -45,7 +45,7 @@ $(".submit-button").click(function(e){
 });
 $(".city-field").keyup(function() {
   var url = "http://vdbmovies.com/getcity?q=";
-  url += $(".city-field").val();
+  url += $(".city-field").val().toLowerCase();
   $.getJSON(url, function(data) {
     var everything = "<ul>";
       $.each(data, function(i, item) {
