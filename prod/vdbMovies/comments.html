@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script>
+$(document).ready(function(){
+    $(".input-button").click(function(){
+        var myobj = {Name:$(".name").val(),Comment:$(".comment").val()};
+        jobj = JSON.stringify(myobj);
+        $(".json").text(jobj);
+    });
+});
+</script>
+</head>
+<body>
+
+<form class="comment-form" action="">
+  Name: <input type="text" class="name" value="Mickey"><br>
+  comment: <input type="text" class="comment" value="Hello"><br>
+</form>
+
+<button class="input-button">Serialize form values</button>
+
+<div class="json"></div>
+
+</body>
+</html>
