@@ -3,13 +3,31 @@
 <head>
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script>
+getComments = function(){
+  var get_url = "http://vdbmovies.com/comment";
+  $.getJSON(get_url, function(data){
+    console.log(data);
+    var everything;
+    everything = "<ul>";
+    $.each(data, function(i, item){
+      everything += "<li> Name: " + data[i].Name + " Comment: " + data[i].Comment + "</li>";
+    });
+    everything += "</ul>";
+    $(".current-comments").html(everything);
+  });
+}
 $(document).ready(function(){
+    getComments();
     $(".input-button").click(function(){
         var myobj = {Name:$(".name").val(),Comment:$(".comment").val()};
         jobj = JSON.stringify(myobj);
-        $(".json").text(jobj);
+        var post_url = "http://vdbmovies.com/comment";
+        $.post(post_url,jobj,function(data,textStatus) {
+          getComments();
+        });
     });
 });
+
 </script>
 </head>
 <body>
@@ -21,7 +39,7 @@ $(document).ready(function(){
 
 <button class="input-button">Serialize form values</button>
 
-<div class="json"></div>
+<div class="current-comments"></div>
 
 </body>
 </html>
