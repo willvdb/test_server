@@ -1,4 +1,4 @@
-exports.run = function(port, root){
+exports.run = function(port, root) {
 
   var fs = require('fs');
   var http = require('http');
@@ -6,28 +6,31 @@ exports.run = function(port, root){
   var readline = require('readline');
   var mongo = require('mongodb');
   var ROOT_DIR = root;
+
   function isEmpty(str) {
     return (!str || 0 === str.length);
   }
 
 
-  http.createServer(function (req, res) {
+  http.createServer(function(req, res) {
     var urlObj = url.parse(req.url, true, false);
-    console.log (urlObj.pathname.substring(1,8));
-    if (urlObj.pathname.substring(1,8) === "getcity"){
-      fs.readFile("cities.dat.txt", function(err, data){
-        if(err){
+    console.log(urlObj.pathname.substring(1, 8));
+    if (urlObj.pathname.substring(1, 8) === "getcity") {
+      fs.readFile("cities.dat.txt", function(err, data) {
+        if (err) {
           res.writeHead(200);
           res.end("There was an error getting your cities...")
         } else {
           var resultArray = [];
-          if (!isEmpty(urlObj.query["q"])){
+          if (!isEmpty(urlObj.query["q"])) {
             var cities = data.toString().split('\n');
-            var myRe = new RegExp("^"+urlObj.query["q"]);
-            for (i = 0; i < cities.length; i++){
+            var myRe = new RegExp("^" + urlObj.query["q"]);
+            for (i = 0; i < cities.length; i++) {
               var result = cities[i].search(myRe);
-              if(result != -1) {
-                var obj = {"city": cities[i]}
+              if (result != -1) {
+                var obj = {
+                  "city": cities[i]
+                }
                 resultArray.push(obj);
               }
             }
@@ -37,34 +40,43 @@ exports.run = function(port, root){
         }
       });
     } else if (urlObj.pathname === "/comment") {
-      console.log("comment route");
-      if(req.method === "POST"){
-         var jsonData = "";
-         req.on('data', function(chunk){
-           jsonData += chunk;
-         });
-         req.on('end', function(){
-           var reqObj = JSON.parse(jsonData);
-           console.log(reqObj);
-           console.log("Name: " + reqObj.Name);
-           console.log("Comment: " + reqObj.Comment);
-           var mongo_client = mongo.MongoClient;
-           mongo_client.connect("mongodb://localhost/weather", function(err, db){
-             if (err){
-
-             } else {
-               db.collection('comments').insert(reqObj,function(err, records){
-                 console.log("Record added as " + records[0]._id);
-		 res.writeHead(200);
-        	 res.end("");
-               });
-             }
-           });
-         });
+      if (req.method === "POST") {
+        var jsonData = "";
+        req.on('data', function(chunk) {
+          jsonData += chunk;
+        });
+        req.on('end', function() {
+          var reqObj = JSON.parse(jsonData);
+          var mongo_client = mongo.MongoClient;
+          mongo_client.connect("mongodb://localhost/weather", function(err, db) {
+            if (err) {
+              console.log("error");
+            } else {
+              db.collection('comments').insert(reqObj, function(err, records) {
+                res.writeHead(200);
+                res.end("");
+              });
+            }
+          });
+        });
+      } else if (req.method === "GET"){
+        var mongo_client = mongo.MongoClient;
+        mongo_client.connect("mongodb://localhost/weather", function(err, db){
+          if (err) {
+            console.log("error");
+          } else {
+            comments.find(function(err, items){
+              items.toArray(function(err, item_array){
+                res.writeHead(200);
+                res.end(JSON.stringify(item_array));
+              });
+            });
+          }
+        });
       }
 
-    } else if(urlObj.pathname === "/"){
-      fs.readFile("prod/vdbMovies/vdm.htm", function (err,data) {
+    } else if (urlObj.pathname === "/") {
+      fs.readFile("prod/vdbMovies/vdm.htm", function(err, data) {
         if (err) {
           res.writeHead(404);
           res.end(JSON.stringify(err));
@@ -73,8 +85,8 @@ exports.run = function(port, root){
         res.writeHead(200);
         res.end(data);
       });
-    } else if(urlObj.pathname === "/weather"){
-      fs.readFile("prod/vdbMovies/city-weather.html", function (err,data) {
+    } else if (urlObj.pathname === "/weather") {
+      fs.readFile("prod/vdbMovies/city-weather.html", function(err, data) {
         if (err) {
           res.writeHead(404);
           res.end(JSON.stringify(err));
@@ -84,7 +96,7 @@ exports.run = function(port, root){
         res.end(data);
       });
     } else {
-      fs.readFile(ROOT_DIR + urlObj.pathname, function (err,data) {
+      fs.readFile(ROOT_DIR + urlObj.pathname, function(err, data) {
         if (err) {
           res.writeHead(404);
           res.end(JSON.stringify(err));
