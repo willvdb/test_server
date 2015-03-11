@@ -49,12 +49,14 @@ exports.run = function(port, root){
            console.log("Name: " + reqObj.Name);
            console.log("Comment: " + reqObj.Comment);
            var mongo_client = mongo.MongoClient;
-           mongo_client.connetct("mongodb://localhost/weather", function(err, db){
+           mongo_client.connect("mongodb://localhost/weather", function(err, db){
              if (err){
 
              } else {
                db.collection('comments').insert(reqObj,function(err, records){
                  console.log("Record added as " + records[0]._id);
+		 res.writeHead(200);
+        	 res.end("");
                });
              }
            });
