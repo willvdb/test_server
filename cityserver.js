@@ -65,12 +65,14 @@ exports.run = function(port, root) {
           if (err) {
             console.log("error");
           } else {
-            comments.find(function(err, items){
-              items.toArray(function(err, item_array){
-                res.writeHead(200);
-                res.end(JSON.stringify(item_array));
+            db.collection("comments", function(err, comments)){
+              comments.find(function(err, items){
+                items.toArray(function(err, item_array){
+                  res.writeHead(200);
+                  res.end(JSON.stringify(item_array));
+                });
               });
-            });
+            }
           }
         });
       }
