@@ -1,3 +1,3 @@
 var s = require("./cityserver");
 
-s.run(8080, "prod/vdbMovies");
+s.run(80, "prod/vdbMovies");
