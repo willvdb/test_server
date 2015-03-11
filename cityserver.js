@@ -4,6 +4,7 @@ exports.run = function(port, root){
   var http = require('http');
   var url = require('url');
   var readline = require('readline');
+  var mongo = require('mongodb');
   var ROOT_DIR = root;
   function isEmpty(str) {
     return (!str || 0 === str.length);
@@ -38,8 +39,27 @@ exports.run = function(port, root){
     } else if (urlObj.pathname === "/comment") {
       console.log("comment route");
       if(req.method === "POST"){
-	console.log("post comment route");	
-      } 
+         var jsonData = "";
+         req.on('data', function(chunk){
+           jsonData += chunk;
+         });
+         req.on('end', function(){
+           var reqObj = JSON.parse(jsonData);
+           console.log(reqObj);
+           console.log("Name: " + reqObj.Name);
+           console.log("Comment: " + reqObj.Comment);
+           var mongo_client = mongo.MongoClient;
+           mongo_client.connetct("mongodb://localhost/weather", function(err, db){
+             if (err){
+
+             } else {
+               db.collection('comments').insert(reqObj,function(err, records){
+                 console.log("Record added as " + records[0]._id);
+               });
+             }
+           });
+         });
+      }
 
     } else if(urlObj.pathname === "/"){
       fs.readFile("prod/vdbMovies/vdm.htm", function (err,data) {
