@@ -14,7 +14,6 @@ exports.run = function(port, root) {
 
   http.createServer(function(req, res) {
     var urlObj = url.parse(req.url, true, false);
-    console.log(urlObj.pathname.substring(1, 8));
     if (urlObj.pathname.substring(1, 8) === "getcity") {
       fs.readFile("cities.dat.txt", function(err, data) {
         if (err) {
