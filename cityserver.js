@@ -96,6 +96,18 @@ exports.run = function(port, root) {
         res.writeHead(200);
         res.end(data);
       });
+    } else if (urlObj.pathname === "/testHTTP"){
+      console.log(req);
+      var jsonData = "";
+      req.on('data', function(chunk) {
+        jsonData += chunk;
+      });
+      req.on('end', function(){
+        reqObj = JSON.parse(jsonData);
+        console.log(reqObj);
+        res.writeHead(200);
+        res.end(JSON.stringify(reqObj));
+      });
     } else {
       fs.readFile(ROOT_DIR + urlObj.pathname, function(err, data) {
         if (err) {
