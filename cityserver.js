@@ -97,7 +97,7 @@ exports.run = function(port, root) {
         res.end(data);
       });
     } else if (urlObj.pathname === "/testHTTP"){
-      console.log(req);
+      console.log(req.data.json);
       var jsonData = "";
       req.on('data', function(chunk) {
         jsonData += chunk;
